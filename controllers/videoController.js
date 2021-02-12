@@ -3,7 +3,6 @@ export const search = (req, res) => {
     const {query:{ term: searchingBy }} = req;
     // const searchingBy = req.query.term;
     // 위의 두 개는 완전히 같은 결과
-    console.log(req.query);
     res.render("search", { pageTitle: "Search", searchingBy });
 }
 export const upload = (req, res) =>
