@@ -1,4 +1,17 @@
-export const join = (req, res) => res.render("join");
+export const getJoin = (req, res) => res.render("join");
+
+export const postJoin = (req, res) => {
+    const { body: { name, email, password, password2 }} = req;
+    if (password !== password2) {
+        res.status(400);
+    } else {
+        // TODO: Register User
+        // TODO: User Login
+        res.redirect(routes.home)
+    }
+    res.render("join", {pageTitle: "Join"});
+}
+
 export const login = (req, res) => res.render("login");
 export const logout = (req, res) => res.render("logout");
 export const users = (req, res) => res.render("user");
