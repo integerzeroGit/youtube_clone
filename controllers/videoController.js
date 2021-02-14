@@ -1,11 +1,12 @@
 import routes from "../routes";
 
-export const home = (req, res) => res.render("home", { pageTitle: "Home", videos });
+//export const home = (req, res) => res.render("home", { pageTitle: "Home", videos });
+export const home = (req, res) => res.render("home", { pageTitle: "Home"});
 export const search = (req, res) => {
     const {query:{ term: searchingBy }} = req;
     // const searchingBy = req.query.term;
     // 위의 두 개는 완전히 같은 결과
-    res.render("search", { pageTitle: "Search", searchingBy, videos });
+    //res.render("search", { pageTitle: "Search", searchingBy, videos });
 }
 export const getUpload = (req, res) =>
     res.render("upload", { pageTitle: "Upload" });
