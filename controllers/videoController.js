@@ -1,10 +1,12 @@
 import routes from "../routes";
 import Video from "../models/Video";
 
+
+// Home
 export const home = async (req, res) => {
     try {
         // find all video
-        const videos = await Video.find({});
+        const videos = await Video.find({}).sort({ _id:-1 });
         res.render("home", { pageTitle: "Home", videos });
     } catch (error) {
         console.log(error);
@@ -12,11 +14,25 @@ export const home = async (req, res) => {
     }
 }
 
-export const search = (req, res) => {
-    const {query:{ term: searchingBy }} = req;
+
+// Search
+export const search = async (req, res) => {
+    const { 
+        query:{ term: searchingBy } 
+    } = req;
     // const searchingBy = req.query.term;
     // 위의 두 개는 완전히 같은 결과
-    //res.render("search", { pageTitle: "Search", searchingBy, videos });
+    let videos = [];
+    try {
+        videos = await Video.find({ 
+            title: { $regex: searchingBy, $options: "i" } 
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.render("search", { pageTitle: "Search", searchingBy, videos });
+
 }
 export const getUpload = (req, res) =>
     res.render("upload", { pageTitle: "Upload" });
@@ -82,9 +98,7 @@ export const deleteVideo = async (req, res) => {
 
     try {
         await Video.findOneAndRemove({ _id:id });
-    } catch (error) {
-        
-    }
+    } catch (error) {}
 
     res.redirect(routes.home);
 }
